@@ -1,4 +1,4 @@
-// Jogo de Batalha Naval (Nível Novato)
+// Jogo de Batalha Naval (Nível Aventureiro)
 Aluna:Larissa Severo de Faria
 
 #include <stdio.h>
@@ -6,12 +6,12 @@ Aluna:Larissa Severo de Faria
 #define TAMANHO_TABULEIRO 10
 #define TAMANHO_NAVIO 3
 
-// função pra mostrar o tabuleiro
+// Função para exibir o tabuleiro
 void exibirTabuleiro(int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO]) {
     printf("--- Tabuleiro de Batalha Naval ---\n");
-    // anda por todas as linhas
+    // Anda por todas as linhas
     for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
-        // anda por todas as colunas de cada linha
+        // Anda por todas as colunas de cada linha
         for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
             printf("%d ", tabuleiro[i][j]);
         }
@@ -21,43 +21,101 @@ void exibirTabuleiro(int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO]) {
 }
 
 int main() {
-    // o tabuleiro 10x10, começa tudo em 0 (água)
+    // Tabuleiro 10x10, começa tudo em 0 (água)
     int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO] = {0};
 
-    // coordenadas pra colocar os navios
-    int linha_navio1 = 2; // navio horizontal
+    // Coordenadas dos 4 navios (definidas no código)
+    // Navio 1: horizontal
+    int linha_navio1 = 2;
     int coluna_navio1 = 1;
-    
-    int linha_navio2 = 5; // navio vertical
+
+    // Navio 2: vertical
+    int linha_navio2 = 5;
     int coluna_navio2 = 7;
+    
+    // Navio 3: diagonal (linha e coluna aumentam)
+    int linha_navio3 = 1;
+    int coluna_navio3 = 1;
 
-    // -- Posicionando os Navios --
+    // Navio 4: diagonal (linha aumenta e coluna diminui)
+    int linha_navio4 = 1;
+    int coluna_navio4 = 6;
 
-    // Navio Horizontal
-    // Checa se o navio cabe no tabuleiro
-    if (coluna_navio1 + TAMANHO_NAVIO <= TAMANHO_TABULEIRO) {
-        // Se couber, preenche as posições com 3
-        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+    // --- Posicionando os Navios ---
+    int i, j;
+    int pode_posicionar;
+
+    // 1. Posiciona o Navio Horizontal
+    pode_posicionar = 1;
+    for (i = 0; i < TAMANHO_NAVIO; i++) {
+        if (coluna_navio1 + i >= TAMANHO_TABULEIRO || tabuleiro[linha_navio1][coluna_navio1 + i] != 0) {
+            pode_posicionar = 0;
+            break;
+        }
+    }
+    if (pode_posicionar) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
             tabuleiro[linha_navio1][coluna_navio1 + i] = 3;
         }
         printf("Navio horizontal posicionado.\n");
     } else {
-        printf("Navio horizontal fora dos limites.\n");
+        printf("Erro: Nao foi possivel posicionar o navio horizontal.\n");
     }
 
-    // Navio Vertical
-    // Checa se o navio cabe no tabuleiro
-    if (linha_navio2 + TAMANHO_NAVIO <= TAMANHO_TABULEIRO) {
-        // Se couber, preenche as posições com 3
-        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+    // 2. Posiciona o Navio Vertical
+    pode_posicionar = 1;
+    for (i = 0; i < TAMANHO_NAVIO; i++) {
+        if (linha_navio2 + i >= TAMANHO_TABULEIRO || tabuleiro[linha_navio2 + i][coluna_navio2] != 0) {
+            pode_posicionar = 0;
+            break;
+        }
+    }
+    if (pode_posicionar) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
             tabuleiro[linha_navio2 + i][coluna_navio2] = 3;
         }
         printf("Navio vertical posicionado.\n");
     } else {
-        printf("Navio vertical fora dos limites.\n");
+        printf("Erro: Nao foi possivel posicionar o navio vertical.\n");
     }
 
-    // mostra o resultado
+    // 3. Posiciona o Navio Diagonal (linha e coluna aumentam)
+    pode_posicionar = 1;
+    for (i = 0; i < TAMANHO_NAVIO; i++) {
+        if (linha_navio3 + i >= TAMANHO_TABULEIRO || coluna_navio3 + i >= TAMANHO_TABULEIRO || 
+            tabuleiro[linha_navio3 + i][coluna_navio3 + i] != 0) {
+            pode_posicionar = 0;
+            break;
+        }
+    }
+    if (pode_posicionar) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linha_navio3 + i][coluna_navio3 + i] = 3;
+        }
+        printf("Navio diagonal 1 posicionado.\n");
+    } else {
+        printf("Erro: Nao foi possivel posicionar o navio diagonal 1.\n");
+    }
+    
+    // 4. Posiciona o Navio Diagonal (linha aumenta, coluna diminui)
+    pode_posicionar = 1;
+    for (i = 0; i < TAMANHO_NAVIO; i++) {
+        if (linha_navio4 + i >= TAMANHO_TABULEIRO || coluna_navio4 - i < 0 ||
+            tabuleiro[linha_navio4 + i][coluna_navio4 - i] != 0) {
+            pode_posicionar = 0;
+            break;
+        }
+    }
+    if (pode_posicionar) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linha_navio4 + i][coluna_navio4 - i] = 3;
+        }
+        printf("Navio diagonal 2 posicionado.\n");
+    } else {
+        printf("Erro: Nao foi possivel posicionar o navio diagonal 2.\n");
+    }
+
+    // Exibe o tabuleiro com todos os navios
     exibirTabuleiro(tabuleiro);
 
     return 0;
