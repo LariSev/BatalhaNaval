@@ -1,0 +1,64 @@
+// Jogo de Batalha Naval (Nível Novato)
+Aluna:Larissa Severo de Faria
+
+#include <stdio.h>
+
+#define TAMANHO_TABULEIRO 10
+#define TAMANHO_NAVIO 3
+
+// função pra mostrar o tabuleiro
+void exibirTabuleiro(int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO]) {
+    printf("--- Tabuleiro de Batalha Naval ---\n");
+    // anda por todas as linhas
+    for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+        // anda por todas as colunas de cada linha
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int main() {
+    // o tabuleiro 10x10, começa tudo em 0 (água)
+    int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO] = {0};
+
+    // coordenadas pra colocar os navios
+    int linha_navio1 = 2; // navio horizontal
+    int coluna_navio1 = 1;
+    
+    int linha_navio2 = 5; // navio vertical
+    int coluna_navio2 = 7;
+
+    // -- Posicionando os Navios --
+
+    // Navio Horizontal
+    // Checa se o navio cabe no tabuleiro
+    if (coluna_navio1 + TAMANHO_NAVIO <= TAMANHO_TABULEIRO) {
+        // Se couber, preenche as posições com 3
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linha_navio1][coluna_navio1 + i] = 3;
+        }
+        printf("Navio horizontal posicionado.\n");
+    } else {
+        printf("Navio horizontal fora dos limites.\n");
+    }
+
+    // Navio Vertical
+    // Checa se o navio cabe no tabuleiro
+    if (linha_navio2 + TAMANHO_NAVIO <= TAMANHO_TABULEIRO) {
+        // Se couber, preenche as posições com 3
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linha_navio2 + i][coluna_navio2] = 3;
+        }
+        printf("Navio vertical posicionado.\n");
+    } else {
+        printf("Navio vertical fora dos limites.\n");
+    }
+
+    // mostra o resultado
+    exibirTabuleiro(tabuleiro);
+
+    return 0;
+}
